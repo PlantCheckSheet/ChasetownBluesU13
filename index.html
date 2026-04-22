@@ -66,4 +66,290 @@
         height: auto;
         display: block;
         object-fit: contain;
+      }
+
+      .header h1 {
+        margin: 0;
+        font-size: 2rem;
+        line-height: 1.2;
+      }
+
+      .header p {
+        margin: 8px 0 0;
+        color: var(--muted);
+        font-size: 1rem;
+      }
+
+      .content {
+        padding: 28px;
+      }
+
+      form {
+        display: grid;
+        gap: 20px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+      }
+
+      .field {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      label {
+        font-weight: 700;
+        font-size: 0.98rem;
+      }
+
+      input,
+      select,
+      button {
+        font: inherit;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 14px;
+        border-radius: 12px;
+        border: 1px solid var(--border);
+        background: #1f2937;
+        color: var(--text);
+      }
+
+      input::placeholder {
+        color: #9ca3af;
+      }
+
+      input:focus,
+      select:focus {
+        outline: 3px solid rgba(212, 175, 55, 0.18);
+        border-color: #d4af37;
+      }
+
+      .question-block {
+        padding: 18px;
+        border: 1px solid #374151;
+        border-radius: 14px;
+        background: #0b1220;
+      }
+
+      .question-title {
+        margin: 0 0 12px;
+        font-size: 1.05rem;
+      }
+
+      .help {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+
+      .actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
+
+      button {
+        border: none;
+        background: var(--primary);
+        color: #111827;
+        padding: 14px 20px;
+        border-radius: 12px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: var(--primary-hover);
+      }
+
+      button:disabled {
+        opacity: 0.7;
+        cursor: wait;
+      }
+
+      .note {
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+
+      .message {
+        display: none;
+        padding: 14px 16px;
+        border-radius: 12px;
+        font-weight: 600;
+      }
+
+      .message.success {
+        background: #ecfdf5;
+        color: #065f46;
+        border: 1px solid #a7f3d0;
+      }
+
+      .message.error {
+        background: #fef2f2;
+        color: #991b1b;
+        border: 1px solid #fecaca;
+      }
+
+      @media (max-width: 640px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+
+        .header h1 {
+          font-size: 1.65rem;
+        }
+
+        .content,
+        .header {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <section class="card">
+        <div class="header">
+          <div class="branding">
+            <img src="chasetown.png" alt="Chasetown Blues U13 logo" class="team-logo" />
+            <div>
+              <h1>Chasetown Blues U13<br />Player of the Season Survey</h1>
+              <p>Please complete both votes — one from the parent and one from the player.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="content">
+          <form id="surveyForm">
+            <div class="grid">
+              <div class="field">
+                <label for="parentName">Parent's Name</label>
+                <input
+                  type="text"
+                  id="parentName"
+                  name="parentName"
+                  placeholder="Enter parent's name"
+                  required
+                />
+              </div>
+
+              <div class="field">
+                <label for="playerName">Player's Name</label>
+                <input
+                  type="text"
+                  id="playerName"
+                  name="playerName"
+                  placeholder="Enter player's name"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="question-block">
+              <h2 class="question-title">1. Parent vote: Who is your player of the season?</h2>
+              <div class="field">
+                <label for="parentVote">Choose a player</label>
+                <select id="parentVote" name="parentVote" required>
+                  <option value="">Select a player</option>
+                  <option>Child Name 1</option>
+                  <option>Child Name 2</option>
+                  <option>Child Name 3</option>
+                  <option>Child Name 4</option>
+                </select>
+              </div>
+              <p class="help">This dropdown will be updated with your full team list.</p>
+            </div>
+
+            <div class="question-block">
+              <h2 class="question-title">2. Player vote: Who is your player of the season?</h2>
+              <div class="field">
+                <label for="playerVote">Choose a player</label>
+                <select id="playerVote" name="playerVote" required>
+                  <option value="">Select a player</option>
+                  <option>Child Name 1</option>
+                  <option>Child Name 2</option>
+                  <option>Child Name 3</option>
+                  <option>Child Name 4</option>
+                </select>
+              </div>
+              <p class="help">This can use the same player list as the parent vote.</p>
+            </div>
+
+            <div class="message success" id="successMessage"></div>
+            <div class="message error" id="errorMessage"></div>
+
+            <div class="actions">
+              <button type="submit">Submit Vote</button>
+              <span class="note">Connected to Google Sheets via Apps Script.</span>
+            </div>
+          </form>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxU96O4UpR5T-rABjBHsg34JxplLyOOeBzLZz76CuIGN_0WAMrO2IVtPQgkS4vLuhF3/exec';
+
+      const form = document.getElementById('surveyForm');
+      const successMessage = document.getElementById('successMessage');
+      const errorMessage = document.getElementById('errorMessage');
+      const submitButton = form.querySelector('button[type="submit"]');
+
+      form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        successMessage.style.display = 'none';
+        errorMessage.style.display = 'none';
+        successMessage.textContent = '';
+        errorMessage.textContent = '';
+
+        const formData = {
+          parentName: form.parentName.value.trim(),
+          playerName: form.playerName.value.trim(),
+          parentVote: form.parentVote.value,
+          playerVote: form.playerVote.value,
+        };
+
+        submitButton.disabled = true;
+        submitButton.textContent = 'Submitting...';
+
+        try {
+          const response = await fetch(APPS_SCRIPT_URL, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'text/plain;charset=utf-8',
+            },
+            body: JSON.stringify(formData),
+          });
+
+          const result = await response.json();
+
+          if (!result.success) {
+            throw new Error(result.message || 'Submission failed.');
+          }
+
+          successMessage.textContent = 'Thanks, your vote has been recorded.';
+          successMessage.style.display = 'block';
+          form.reset();
+        } catch (error) {
+          errorMessage.textContent = 'There was a problem sending the form. Please try again.';
+          errorMessage.style.display = 'block';
+          console.error('Submission error:', error);
+        } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = 'Submit Vote';
+        }
+      });
+    </script>
+  </body>
 </html>
