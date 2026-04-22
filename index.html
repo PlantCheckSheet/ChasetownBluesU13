@@ -3,17 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Player of the Season Survey</title>
+    <title>Chasetown Blues U13 Survey</title>
     <style>
       :root {
-        --bg: #f4f7fb;
-        --card: #ffffff;
-        --text: #1f2937;
-        --muted: #6b7280;
-        --border: #d1d5db;
-        --primary: #1d4ed8;
-        --primary-hover: #1e40af;
-        --shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+        --bg: #0f172a;
+        --card: #111827;
+        --text: #f9fafb;
+        --muted: #d1d5db;
+        --border: #374151;
+        --primary: #d4af37;
+        --primary-hover: #b8932f;
+        --shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
         --radius: 18px;
       }
 
@@ -24,7 +24,7 @@
       body {
         margin: 0;
         font-family: Arial, Helvetica, sans-serif;
-        background: linear-gradient(180deg, #eef4ff 0%, var(--bg) 100%);
+        background: linear-gradient(180deg, #020617 0%, var(--bg) 100%);
         color: var(--text);
       }
 
@@ -43,13 +43,13 @@
         border-radius: var(--radius);
         box-shadow: var(--shadow);
         overflow: hidden;
-        border: 1px solid rgba(209, 213, 219, 0.7);
+        border: 1px solid rgba(55, 65, 81, 0.9);
       }
 
       .header {
         padding: 28px 28px 20px;
-        background: linear-gradient(135deg, #dbeafe 0%, #eff6ff 100%);
-        border-bottom: 1px solid rgba(209, 213, 219, 0.8);
+        background: linear-gradient(135deg, #111827 0%, #1f2937 100%);
+        border-bottom: 1px solid rgba(55, 65, 81, 0.95);
         text-align: center;
       }
 
@@ -60,25 +60,18 @@
         gap: 14px;
       }
 
-      .logo-placeholder {
-        width: 88px;
-        height: 88px;
-        border-radius: 50%;
-        background: #ffffff;
-        border: 2px dashed #93c5fd;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: #2563eb;
-        font-size: 14px;
-        font-weight: bold;
-        text-align: center;
-        padding: 10px;
+      .team-logo {
+        width: 160px;
+        max-width: 100%;
+        height: auto;
+        display: block;
+        object-fit: contain;
       }
 
       .header h1 {
         margin: 0;
         font-size: 2rem;
+        line-height: 1.2;
       }
 
       .header p {
@@ -122,24 +115,28 @@
       input,
       select {
         width: 100%;
-        padding: 14px 14px;
+        padding: 14px;
         border-radius: 12px;
         border: 1px solid var(--border);
-        background: #fff;
+        background: #1f2937;
         color: var(--text);
+      }
+
+      input::placeholder {
+        color: #9ca3af;
       }
 
       input:focus,
       select:focus {
-        outline: 3px solid rgba(59, 130, 246, 0.18);
-        border-color: #60a5fa;
+        outline: 3px solid rgba(212, 175, 55, 0.18);
+        border-color: #d4af37;
       }
 
       .question-block {
         padding: 18px;
-        border: 1px solid #e5e7eb;
+        border: 1px solid #374151;
         border-radius: 14px;
-        background: #fafcff;
+        background: #0b1220;
       }
 
       .question-title {
@@ -163,7 +160,7 @@
       button {
         border: none;
         background: var(--primary);
-        color: #fff;
+        color: #111827;
         padding: 14px 20px;
         border-radius: 12px;
         font-weight: 700;
@@ -174,137 +171,18 @@
         background: var(--primary-hover);
       }
 
+      button:disabled {
+        opacity: 0.7;
+        cursor: wait;
+      }
+
       .note {
         font-size: 0.9rem;
         color: var(--muted);
       }
 
-      .success {
+      .message {
         display: none;
         padding: 14px 16px;
         border-radius: 12px;
-        background: #ecfdf5;
-        color: #065f46;
-        border: 1px solid #a7f3d0;
-        font-weight: 600;
-      }
-
-      @media (max-width: 640px) {
-        .grid {
-          grid-template-columns: 1fr;
-        }
-
-        .header h1 {
-          font-size: 1.65rem;
-        }
-
-        .content,
-        .header {
-          padding: 20px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="wrap">
-      <section class="card">
-        <div class="header">
-          <div class="branding">
-            <div class="logo-placeholder">Team Logo</div>
-            <div>
-              <h1>Player of the Season Survey</h1>
-              <p>Vote once for the parents' choice and once for the players' choice.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="content">
-          <form id="surveyForm">
-            <div class="grid">
-              <div class="field">
-                <label for="parentName">Parent's Name</label>
-                <input
-                  type="text"
-                  id="parentName"
-                  name="parentName"
-                  placeholder="Enter parent's name"
-                  required
-                />
-              </div>
-
-              <div class="field">
-                <label for="playerName">Player's Name</label>
-                <input
-                  type="text"
-                  id="playerName"
-                  name="playerName"
-                  placeholder="Enter player's name"
-                  required
-                />
-              </div>
-            </div>
-
-            <div class="question-block">
-              <h2 class="question-title">1. Parent vote: Who is your player of the season?</h2>
-              <div class="field">
-                <label for="parentVote">Choose a player</label>
-                <select id="parentVote" name="parentVote" required>
-                  <option value="">Select a player</option>
-                  <option>Child Name 1</option>
-                  <option>Child Name 2</option>
-                  <option>Child Name 3</option>
-                  <option>Child Name 4</option>
-                </select>
-              </div>
-              <p class="help">This dropdown will be updated with your full team list.</p>
-            </div>
-
-            <div class="question-block">
-              <h2 class="question-title">2. Player vote: Who is your player of the season?</h2>
-              <div class="field">
-                <label for="playerVote">Choose a player</label>
-                <select id="playerVote" name="playerVote" required>
-                  <option value="">Select a player</option>
-                  <option>Child Name 1</option>
-                  <option>Child Name 2</option>
-                  <option>Child Name 3</option>
-                  <option>Child Name 4</option>
-                </select>
-              </div>
-              <p class="help">This can use the same player list as the parent vote.</p>
-            </div>
-
-            <div class="success" id="successMessage">
-              Thanks, your vote has been recorded.
-            </div>
-
-            <div class="actions">
-              <button type="submit">Submit Vote</button>
-              <span class="note">Mockup only for now. Google Sheets connection can be added next.</span>
-            </div>
-          </form>
-        </div>
-      </section>
-    </div>
-
-    <script>
-      const form = document.getElementById('surveyForm');
-      const successMessage = document.getElementById('successMessage');
-
-      form.addEventListener('submit', function (event) {
-        event.preventDefault();
-
-        const formData = {
-          parentName: form.parentName.value,
-          playerName: form.playerName.value,
-          parentVote: form.parentVote.value,
-          playerVote: form.playerVote.value,
-        };
-
-        console.log('Mock submission:', formData);
-        successMessage.style.display = 'block';
-        form.reset();
-      });
-    </script>
-  </body>
-</html>
+        font-weight:
